@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Algorithme de Mariage Stable - Wided Meflah</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <!-- <link href="css/styles.css" rel="stylesheet" /> -->
+       
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    </head>
+    <body>
+        <!-- Navigation-->
+        <!-- <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav> -->
+
+        
+        <!-- Page Header-->
+     
+            <header class="masthead" style="background-image: url('{{ url_for('static', filename='home-bg.jpg') }}')">
+
+
+
+        
+
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1 id="mariage">Mariage Stable </h1>
+                            <span class="subheading">Etudiant-Etablissement</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header> 
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-10">
+                    <!-- Post preview-->
+                    <form id="generateNamesForm">
+                        <div class="post-preview text-center d-flex flex-column align-items-center">
+                            <a href="#post-title">
+                                <h2 class="post-title">Choisissez la taille de votre jeu de données</h2>
+                            </a>
+                                <p class="post-meta">Cela vous permettra de fixer le nombre d'étudiants et d'établissements pour lesquels le mariage stable sera appliqué. </p>
+                             
+                          
+                            
+                            <input class="form-control m-4" list="datalistOptions" id="sampleSize" name="sampleSize" value="5" min="1" placeholder="Type to search..." style="text-align:center; width: 300px;">
+                            
+                            <div class="mb-4 m-4">
+                                <button type="submit" class="btn btn-primary text-uppercase">Visualiser →</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Post preview-->
+                    <section class="pt-4">
+                        <div class="container px-lg-5">
+                            <!-- Page Features-->
+                            <div class="row gx-lg-5">
+                                <div class="col-lg-6 col-xxl-6 mb-5">
+                                    <div class="card bg-light border-0 h-100">
+                                        <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                                            <div class="feature bg-secondary bg-gradient text-white rounded-3 mb-4 mt-n4" style="margin-top:-20px; width:50px; height:50px" ><i class="bi bi-building" ></i></div>
+                                            <h2 class="fs-4 fw-bold">Etablissements</h2>
+                                            <p class="mb-0">
+                                                <ul class="list-group list-group-flush" id="schoolNames"></ul>
+                                                   
+                                                </ul>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-xxl-6 mb-5">
+                                    <div class="card bg-light border-0 h-100">
+                                        <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4" style="margin-top:-20px; width:50px; height:50px" ><i class="bi bi-person"></i></div>
+                                            <h2 class="fs-4 fw-bold">Etudiants</h2>
+                                            <p class="mb-0">
+                                                <ul class="list-group list-group-flush"id="studentNames">
+                                                   
+                                                </ul>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+                      <!-- Divider-->
+                      <hr class="my-4" />
+                      <section class="pt-4">
+                        <div class="container px-lg-5">
+                    <div class="post-preview text-center d-flex flex-column align-items-center">
+                        <a href="#post-title"><h2 class="post-title">Générer des préférences aléatoires</h2></a>
+                        <p class="post-meta">
+                            Ceci permettra de générer aléatoirement des préférences classées par ordre de priorité 
+                            pour les étudiants concernant les établissements, tout comme pour les établissements concernant les étudiants
+                        </p>
+                        <div class="mb-4 m-4">
+                            <button id='generatePreferences' type="submit" class="btn btn-primary text-uppercase">Generer →</button>
+                        </div>
+                      <h6 class="text-left m-5" style="font-size: 20px;">Préférences des étudiants</h6>
+                      
+                        <table class="table table-striped">
+                            <tbody id='studentPreferences'>
+                           
+                              
+                          
+                            </tbody>
+                        </table>
+             
+                        
+                        <h6 class="text-left  m-5" style="font-size: 20px;">Préférences des établissements</h6>
+                        <table class="table table-striped">
+                         
+                            <tbody id='schoolPreferences'>
+                               
+                          
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+           </section>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    <section class="pt-4">
+                      <div class="container px-lg-5">
+                
+                    <!-- Post preview-->
+                    <div class="post-preview text-center d-flex flex-column align-items-center">
+                        <a href="#post-title">
+                            <h2 class="post-title">Lancer le mariage stable <br>(Priorité aux Etudiants)</h2>
+                        </a>
+                        <p class="post-meta">
+                            Ceci permettra de lancer l'exécution de l'algorithme du mariage stable entre les étudiants et les établissements
+                             en prenant en compte leurs préférences générées, en priorisant les étudiants par rapport aux établissements.
+                            </p>
+                            <div class="mb-4 m-4">
+                                <button id='performStudentsFirst' type="submit" class="btn btn-primary text-uppercase">Lancer →</button>
+                              
+                            </div>
+                    </div>
+                    <section class="pt-4">
+                            <div class="container px-lg-5">
+                                <!-- Page Features-->
+                                <div class="row gx-lg-5">
+                                    <div class="col-lg-6 col-xxl-6 mb-5">
+                                        <div class="card bg-light border-0 h-100">
+                                            <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                                                <div class="feature bg-secondary bg-gradient text-white rounded-3 mb-4 mt-n4" style="margin-top:-20px; width:50px; height:50px" ><i class="bi bi-building"></i></div>
+                                                <h2 class="fs-4 fw-bold">Etablissement <i class="bi bi-caret-right-fill"></i> Etudiant </h2>
+                                                <p class="mb-0">
+                                                    <ul id="matchingStudents" class="list-group list-group-flush d-flex align-items-center">
+                                                        <!-- <li style="list-style:none;">
+                                                          <span class="badge rounded-pill bg-primary m-2">Primary</span>  
+                                                         <i class="bi bi-caret-right-fill"></i>
+                                                         <span class="badge rounded-pill bg-primary m-2">Primary</span>
+                                                        </li> -->
+                                                    </ul>
+
+                                                
+
+                                                
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-xxl-6 mb-5">
+                                        <div class="card bg-light border-0 h-100">
+                                            <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                                                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4" style="margin-top:-20px; width:50px; height:50px" ><i class="bi bi-person"></i></div>
+                                                <h2 class="fs-4 fw-bold">Etudiant <i class="bi bi-caret-right-fill"></i> Etablissement</h2>
+                                                <p class="mb-0">
+                                                    <ul id="matchingSchools" class="list-group list-group-flush d-flex align-items-center">
+                                                        <!-- <li style="list-style:none;">
+                                                          <span class="badge rounded-pill bg-primary m-2">Primary</span>  
+                                                         <i class="bi bi-caret-right-fill"></i>
+                                                         <span class="badge rounded-pill bg-primary m-2">Primary</span>
+                                                        </li> -->
+                                                    </ul>
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </section>
+
+
+                        <div class=" text-center d-flex flex-column align-items-center col-12">
+
+                            <div class="card border-light mb-3  col-12" style="max-width: 25rem;">
+                                <div class="card-header">Evaluation de la Satisfaction</div>
+                                <div class="card-body m-4">
+                                    <h5 class="card-title">Etudiants</h5>
+                                    <div id="satisf11"  class="progress">
+                                     
+                                    </div>
+                                    <h5 class="card-title">Etablissements</h5>
+                                  <div  id="satisf12" class="progress">
+                                  
+                                  </div>
+                                  <h5 class="card-title">Moyenne</h5>
+                                  <div  id="satisf111" class="progress">
+                                          
+                                  </div>
+                                 
+                                </div>
+                              </div>
+                          </div>
+
+
+
+                        <div class="post-preview text-center d-flex flex-column align-items-center">
+                            <a href="#post-title">
+                                <h2 class="post-title">Lancer le mariage stable <br>(Priorité aux établissements)</h2>
+                            </a>
+                            <p class="post-meta">
+                                Ceci permettra de lancer l'exécution de l'algorithme du mariage stable entre les étudiants et les établissements
+                                en prenant en compte leurs préférences générées, en priorisant les établissements par rapport aux étudiants.
+                                </p>
+                                <div class="mb-4 m-4">
+                                    
+                                    <button id='performSchoolsFirst' type="submit" class="btn btn-primary text-uppercase">Lancer →</button>
+                                </div>
+                        </div>
+                        <section class="pt-4">
+                            <div class="container px-lg-5">
+                                <!-- Page Features-->
+                                <div class="row gx-lg-5">
+                                    <div class="col-lg-6 col-xxl-6 mb-5">
+                                        <div class="card bg-light border-0 h-100">
+                                            <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                                                <div class="feature bg-secondary bg-gradient text-white rounded-3 mb-4 mt-n4" style="margin-top:-20px; width:50px; height:50px" ><i class="bi bi-building"></i></div>
+                                                <h2 class="fs-4 fw-bold">Etablissement <i class="bi bi-caret-right-fill"></i> Etudiant</h2>
+                                                <p class="mb-0">
+                                                    <ul id="matchingSchools1" class="list-group list-group-flush d-flex align-items-center">
+                                                        <!-- <li style="list-style:none;">
+                                                          <span class="badge rounded-pill bg-primary m-2">Primary</span>  
+                                                         <i class="bi bi-caret-right-fill"></i>
+                                                         <span class="badge rounded-pill bg-primary m-2">Primary</span>
+                                                        </li> -->
+                                                    </ul>
+
+                                                
+
+                                                
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-xxl-6 mb-5">
+                                        <div class="card bg-light border-0 h-100">
+                                            <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                                                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4" style="margin-top:-20px; width:50px; height:50px" ><i class="bi bi-person"></i></div>
+                                                <h2 class="fs-4 fw-bold">Etudiant <i class="bi bi-caret-right-fill"></i> Etablissement</h2>
+                                                <p class="mb-0">
+                                                    <ul id="studentSchoolMatching" class="list-group list-group-flush d-flex align-items-center">
+                                                        <!-- <li style="list-style:none;">
+                                                          <span class="badge rounded-pill bg-primary m-2">Primary</span>  
+                                                         <i class="bi bi-caret-right-fill"></i>
+                                                         <span class="badge rounded-pill bg-primary m-2">Primary</span>
+                                                        </li> -->
+                                                    </ul>
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </section>
+                       
+                            <div class=" text-center d-flex flex-column align-items-center col-12">
+
+                                <div class="card border-light mb-3  col-12" style="max-width: 25rem;">
+                                    <div class="card-header">Evaluation de la Satisfaction</div>
+                                    <div class="card-body m-4">
+                                        <h5 class="card-title">Etablissements</h5>
+                                        <div id="satisf21"  class="progress">
+                                         
+                                        </div>
+                                        <h5 class="card-title">Etudiants</h5>
+                                      <div  id="satisf22" class="progress">
+                                      
+                                      </div>
+                                      <h5 class="card-title">Moyenne</h5>
+                                      <div  id="satisf222" class="progress">
+                                      
+                                      </div>
+                                     
+                                    </div>
+                                  </div>
+                              </div>
+                              
+                           
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    <div class="post-preview text-center d-flex flex-column align-items-center">
+                        <a href="#post-title">
+                            <h2 class="post-title">Comparaison</h2>
+                            <button id='comparer' type="submit" class="btn btn-primary text-uppercase">comparer →</button>
+                            <h3 class="post-subtitle">la meilleur version pour ce jeux de données est: </h3>
+                        </a>
+                        <span id='comparaison' class="badge rounded-pill bg-primary m-2 p-8" style="padding: 15px;"></span>  
+                    </div>
+                    <hr class="my-4" />
+                    
+                    <!-- Pager -->
+                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#">Nouveau jeu de données →</a></div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer-->
+        <!-- <footer class="border-top">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <ul class="list-inline text-center">
+                            <li class="list-inline-item">
+                                <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="small text-center text-muted fst-italic">Copyright &copy; Your Website 2023</div>
+                    </div>
+                </div>
+            </div>
+        </footer> -->
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <!-- <script src="{{ url_for('static', filename='script.js') }}"></script> -->
+        <iframe src="https://www.google.com/recaptcha/api2/aframe" width="0" height="0" style="display: none;"></iframe>
+        <script>
+            function formatJSONResults(data) {
+               var formattedText = '';
+   
+               for (var key in data) {
+                   if (data.hasOwnProperty(key)) {
+                       formattedText += '<p><b>' + key + ':</b> ' + data[key] + '</p>';
+                   }
+               }
+   
+               return formattedText;
+           }
+           $(document).ready(function () {
+    $("#generateNamesForm").submit(function (event) {
+        event.preventDefault();
+        var sampleSize = $("#sampleSize").val(); 
+console.log('val input'.sampleSize);
+        $.post("/generate_names", { sampleSize: sampleSize }, function (data) {
+            // Étape 1 : Pour les établissements (schools)
+            var schoolNamesSpan = $("#schoolNames");
+            schoolNamesSpan.empty(); // Assurez-vous de vider le contenu précédent
+
+            // Parcourez la liste data.school_names et ajoutez chaque élément à la liste
+            for (var i = 0; i < data.school_names.length; i++) {
+                var schoolName = data.school_names[i];
+               // var listItem = $("<li>").text(schoolName);
+                // <span class="badge rounded-pill bg-primary m-2" ></span>
+                var listItem = $(" <span class='badge rounded-pill bg-secondary m-2' ><li>").text(schoolName);
+                    console.log(listItem);
+                schoolNamesSpan.append(listItem);
+            }
+
+            // Étape 2 : Pour les étudiants (students)
+            var studentNamesSpan = $("#studentNames");
+            studentNamesSpan.empty(); // Assurez-vous de vider le contenu précédent
+
+            // Parcourez la liste data.student_names et ajoutez chaque élément à la liste
+            for (var j = 0; j < data.student_names.length; j++) {
+                var studentName = data.student_names[j];
+                var listItem = $("<span class='badge rounded-pill bg-primary m-2' ><li>").text(studentName);
+                studentNamesSpan.append(listItem);
+            }
+        });
+    });    });
+// $(document).ready(function () {
+//             $("#generateNamesForm").submit(function (event) {
+//                 event.preventDefault();
+//                 var sampleSize = $("#sampleSize").val();
+//                 $.post("/generate_names", { sampleSize: sampleSize }, function (data) {
+//                     $("#schoolNames").text(data.school_names.join(", "));
+//                     $("#studentNames").text(data.student_names.join(", "));
+//                 });
+//             });
+
+
+ 
+
+
+
+
+   
+               $("#generatePreferences").click(function () {
+                   $.post("/generate_preferences", function (data) {
+                     
+                       displayStudentPreferences(data.student_preferences);
+                       displaySchoolPreferences(data.school_preferences);
+                   });
+               });
+   
+               $("#performStudentsFirst").click(function () {
+                   $.post("/perform_stable_marriage_students_first", function (data) {
+                    console.log("donnn");
+                    var matchingSchools = $("#matchingSchools");
+                    $.each(data.matching_students, function (student, school) {
+                    var ligne = $('<li style="list-style:none;"><span class="badge rounded-pill bg-primary m-2">' + student +'</span>  <i class="bi bi-caret-right-fill"></i> <span class="badge rounded-pill bg-secondary m-2"> '+ school +'</span> </li> ');
+                    matchingSchools.append(ligne);  
+                }) ;
+                    var matchingStudents = $("#matchingStudents");
+                    $.each(data.school_student, function (student, school) {
+                    var ligne = $('<li style="list-style:none;"><span class="badge rounded-pill bg-secondary m-2">' + student +'</span>  <i class="bi bi-caret-right-fill"></i> <span class="badge rounded-pill bg-primary m-2"> '+ school +'</span> </li> ');
+                    matchingStudents.append(ligne);  
+                }) ;
+
+
+                
+
+
+                $("#satisf11").append('<div  class="progress-bar bg-success" role="progressbar" style="width: '+data.satisf11.toFixed(2)+'%" aria-valuenow="'+data.satisf11.toFixed(2)+'" aria-valuemin="0" aria-valuemax="100">'+data.satisf11.toFixed(2)+'%</div>');
+                $("#satisf12").append('<div  class="progress-bar bg-success" role="progressbar" style="width: '+data.satisf12.toFixed(2)+'%" aria-valuenow="'+data.satisf12.toFixed(2)+'" aria-valuemin="0" aria-valuemax="100">'+data.satisf12.toFixed(2)+'%</div>');
+                
+                    var satisf111 = (data.satisf11+ data.satisf12) / 2;
+                    satisf111 = satisf111.toFixed(2);
+                    console.log(satisf111);
+                    $("#satisf111").append('<div  class="progress-bar bg-success" role="progressbar" style="width: '+satisf111+'%" aria-valuenow="'+satisf111+'" aria-valuemin="0" aria-valuemax="100">'+satisf111+'%</div>');
+                       
+            }) ;}) ;
+
+                //      $("#matchingStudents").html(formatJSONResults(data.matching_students));
+                //      $("#schoolStudentMatching").html(formatJSONResults(data.school_student));
+                   
+                //        $("#satisf11").text(data.satisf11.toFixed(2));s
+                //        $("#satisf12").text(data.satisf12.toFixed(2));
+                //        var satisf111 = (data.satisf11 + data.satisf12) / 2;
+                //        $("#satisf111").text(satisf111.toFixed(2));
+                //    });
+            
+                $("#performSchoolsFirst").click(function () {
+                   $.post("/perform_stable_marriage_schools_first", function (data) {
+                    console.log("donnn");
+                    var matchingSchools = $("#matchingSchools1");
+                    $.each(data.matching_students, function (student, school) {
+                    var ligne = $('<li style="list-style:none;"><span class="badge rounded-pill bg-secondary m-2">' + student +'</span>  <i class="bi bi-caret-right-fill"></i> <span class="badge rounded-pill bg-primary m-2"> '+ school +'</span> </li> ');
+                    matchingSchools.append(ligne);  
+                }) ;
+                    var matchingStudents = $("#studentSchoolMatching");
+                    $.each(data.student_school, function (student, school) {
+                    var ligne = $('<li style="list-style:none;"><span class="badge rounded-pill bg-primary m-2">' + student +'</span>  <i class="bi bi-caret-right-fill"></i> <span class="badge rounded-pill bg-secondary m-2"> '+ school +'</span> </li> ');
+                    matchingStudents.append(ligne);  
+                }) ;
+
+
+                
+
+
+                $("#satisf21").append('<div  class="progress-bar bg-success" role="progressbar" style="width: '+data.satisf21.toFixed(2)+'%" aria-valuenow="'+data.satisf21.toFixed(2)+'" aria-valuemin="0" aria-valuemax="100">'+data.satisf21.toFixed(2)+'%</div>');
+                $("#satisf22").append('<div  class="progress-bar bg-success" role="progressbar" style="width: '+data.satisf22.toFixed(2)+'%" aria-valuenow="'+data.satisf22.toFixed(2)+'" aria-valuemin="0" aria-valuemax="100">'+data.satisf22.toFixed(2)+'%</div>');
+                
+                    var satisf222 = (data.satisf21+ data.satisf22) / 2;
+                    satisf222 = satisf222.toFixed(2);
+               
+                    $("#satisf222").append('<div  class="progress-bar bg-success" role="progressbar" style="width: '+satisf222+'%" aria-valuenow="'+satisf222+'" aria-valuemin="0" aria-valuemax="100">'+satisf222+'%</div>');
+                       
+            }) ;}) ;
+
+            
+
+
+
+            //    $("#performSchoolsFirst").click(function () {
+            //        $.post("/perform_stable_marriage_schools_first", function (data) {
+                   
+            //            $("#matchingSchools").html(formatJSONResults(data.matching_students));
+            //            $("#studentSchoolMatching").html(formatJSONResults(data.student_school));
+            //            $("#satisf21").text(data.satisf21.toFixed(2));
+            //            $("#satisf22").text(data.satisf22.toFixed(2));
+            //            var satisf222 = (data.satisf21 + data.satisf22) / 2;
+            //            $("#satisf222").text(satisf222.toFixed(2));
+            //        });
+            //    });
+               
+               $("#comparer").click(function () {
+       var satisf111 = parseFloat($("#satisf111").text());
+       var satisf222 = parseFloat($("#satisf222").text());
+       var comparaisonText;
+   
+       if (satisf111 > satisf222) {
+           
+           comparaisonText = "prioité aux étudiants";
+       } else if (satisf111 < satisf222) {
+          
+           comparaisonText = "prioité aux établissements";
+       } else {
+         
+           comparaisonText = "les deux versions sont similaires en termes de satisfaction";
+       }
+   
+      
+       $("#comparaison").text(comparaisonText);
+   });
+   
+   
+   
+  
+   
+           // Function to display student preferences
+           function displayStudentPreferences(preferences) {
+    var studentPrefsDiv = $("#studentPreferences");
+    studentPrefsDiv.empty();
+
+    $.each(preferences, function (student, schools) {
+        var ligne = $("<tr><th scope='row'>" + student + "</th></tr>");
+
+        // Parcourez la liste schools et ajoutez chaque élément à la ligne
+        for (var i = 0; i < schools.length; i++) {
+            var schoolName = schools[i];
+            var listItem = $("<td><span class='badge rounded-pill bg-secondary m-2'>" + schoolName + "</span></td>");
+            ligne.append(listItem);
+        }
+
+        studentPrefsDiv.append(ligne);
+    });
+
+    // Supprimez cette ligne, car elle ajoute la div elle-même, ce qui est redondant
+    // studentPrefsDiv.append(studentPrefsDiv);
+}
+
+function displaySchoolPreferences(preferences) {
+    var studentPrefsDiv = $("#schoolPreferences");
+    studentPrefsDiv.empty();
+
+    $.each(preferences, function (student, schools) {
+        var ligne = $("<tr><th scope='row'>" + student + "</th></tr>");
+
+        // Parcourez la liste schools et ajoutez chaque élément à la ligne
+        for (var i = 0; i < schools.length; i++) {
+            var schoolName = schools[i];
+            var listItem = $("<td><span class='badge rounded-pill bg-primary '>" + schoolName + "</span></td>");
+            ligne.append(listItem);
+        }
+
+        studentPrefsDiv.append(ligne);
+    });
+
+    // Supprimez cette ligne, car elle ajoute la div elle-même, ce qui est redondant
+    // studentPrefsDiv.append(studentPrefsDiv);
+}
+       </script>
+    </body>
+    <iframe id="google_esf" name="google_esf" src="https://googleads.g.doubleclick.net/pagead/html/r20231108/r20190131/zrt_lookup_fy2021.html" style="display: none;"></iframe>
+</html>
